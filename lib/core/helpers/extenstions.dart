@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:haya/core/Locale/app_localizations.dart';
 
 extension BuildContextTheme on BuildContext {
@@ -12,8 +13,8 @@ extension BuildContextTheme on BuildContext {
   ScaffoldMessengerState get scaffoldMessengerState =>
       ScaffoldMessenger.of(this);
   Size get size => mediaQuery.size;
-  double get width => size.width;
-  double get height => size.height;
+  double get width => size.width.w;
+  double get height => size.height.h;
   double get aspectRatio => width / height;
   double get pixelRatio => mediaQuery.devicePixelRatio;
 } 
