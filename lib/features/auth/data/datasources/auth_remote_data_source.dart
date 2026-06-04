@@ -1,5 +1,6 @@
 import 'package:haya/core/networking/api_service.dart';
-import 'package:haya/features/auth/data/models/auth_endpoints.dart';
+import 'package:haya/features/auth/constants/auth_endpoints.dart';
+
 
 class AuthRemoteDataSource {
   final ApiService apiService;
