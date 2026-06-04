@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:haya/core/models/error_model.dart';
 
 
 abstract class Failure {
@@ -64,23 +65,22 @@ class ServerFailure extends Failure {
 
   factory ServerFailure.fromResponse(final Response response) {
    
-    // ErrorModel? errorModel;
-    // if (response.data is Map<String, dynamic>) {
-    //   errorModel = ErrorModel.fromJson(response.data as Map<String, dynamic>);
-    //   logger.e(errorModel.details.toString());
-    // }
+    ErrorModel? errorModel;
+    if (response.data is Map<String, dynamic>) {
+      errorModel = ErrorModel.fromJson(response.data as Map<String, dynamic>);
+    }
 
      var message = '';
-    // if (errorModel != null && errorModel.details.isNotEmpty) {
-    //   message = errorModel.details
-    //       .map((final error) => '\u202A$error\u202C')
-    //       .join('\n');
-    // }
+    if (errorModel != null && errorModel.details.isNotEmpty) {
+      message = errorModel.details
+          .map((final error) => '\u202A$error\u202C')
+          .join('\n');
+    }
 
-    // // Fallback to title if details are empty
-    // if (message.isEmpty && errorModel != null) {
-    //   message = errorModel.title;
-    // }
+    // Fallback to title if details are empty
+    if (message.isEmpty && errorModel != null) {
+      message = errorModel.title;
+    }
 
     // Final fallback generic message
     if (message.isEmpty) {
