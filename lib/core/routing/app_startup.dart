@@ -1,0 +1,78 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haya/core/helpers/extenstions.dart';
+import 'package:haya/core/networking/api_service.dart';
+import 'package:haya/core/routing/app_router.dart';
+import 'package:haya/core/services/cache_helper.dart';
+import 'package:haya/injection.dart';
+
+class AppStartupWidget extends StatelessWidget {
+  const AppStartupWidget({super.key, required this.child});
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    final localization = context.l10n;
+    return BlocProvider(
+      create: (context) => AppStartupCubit()..startUp(),
+      child: Scaffold(
+        body: BlocBuilder<AppStartupCubit, AppStartupState>(
+          builder: (context, state) {
+            if (state is AppStartupSuccess) {
+              return child;
+            } else if (state is AppStartupFailure) {
+              return Container(
+                color: Colors.red,
+                child: Column(
+                  children: [
+                     Center(child: Text(localization.ok)),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<AppStartupCubit>().startUp();
+                      },
+                      child:  Text(localization.retry),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+sealed class AppStartupState {}
+
+class AppStartupInitial extends AppStartupState {}
+
+class AppStartupSuccess extends AppStartupState {}
+
+class AppStartupFailure extends AppStartupState {}
+
+class AppStartupLoading extends AppStartupState {}
+
+class AppStartupCubit extends Cubit<AppStartupState> {
+  AppStartupCubit() : super(AppStartupInitial());
+
+  Future<void> startUp() async {
+    emit(AppStartupLoading());
+    try {
+      await CacheHelper.init();
+      await ApiService.init();
+      setupServiceLocator();
+      final isLoggedIn = Random().nextInt(10);
+      if (isLoggedIn<5) {
+        router.goNamed(AppRouter.login.name);
+      } else {
+        router.goNamed(AppRouter.login.name);
+      }
+      emit(AppStartupSuccess());
+    } catch (e) {
+      emit(AppStartupFailure());
+    }
+  }
+}
