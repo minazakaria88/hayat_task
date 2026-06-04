@@ -1,0 +1,42 @@
+name: Build APKs (main)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+       
+
+      - name: Install dependencies
+        run: flutter pub get
+
+
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+    
+
+      - name: Build APK (dev)
+        run: flutter build apk  -t lib/main.dart --release --split-per-abi
+
+      - name: Upload APK artifact (dev)
+        uses: actions/upload-artifact@v4
+        with:
+          name: haya-apk
+          path: build/app/outputs/flutter-apk/*.apk
