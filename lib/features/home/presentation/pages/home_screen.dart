@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/routing/app_router.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../cubit/home_cubit.dart';
+import '../widgets/task_details_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -36,25 +37,28 @@ class HomeScreen extends StatelessWidget {
               itemCount: tasks.length,
               separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(tasks[index].title),
-                  subtitle: Text(tasks[index].description),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      //context.read<HomeCubit>().deleteTask(tasks[index].id);
-                    },
-                  ),
-                  onTap: () {
-                    context.pushNamed(
-                      AppRouter.createEditTask.name,
-                      extra: {
-                        'cubit': context.read<HomeCubit>(),
-                        'task': tasks[index],
-                      },
-                    );
-                  },
+                return TaskDetailsCard(
+                  model: tasks[index],
                 );
+                // return ListTile(
+                //   title: Text(tasks[index].title),
+                //   subtitle: Text(tasks[index].description),
+                //   trailing: IconButton(
+                //     icon: const Icon(Icons.delete, color: Colors.red),
+                //     onPressed: () {
+                //       //context.read<HomeCubit>().deleteTask(tasks[index].id);
+                //     },
+                //   ),
+                //   onTap: () {
+                //     context.pushNamed(
+                //       AppRouter.createEditTask.name,
+                //       extra: {
+                //         'cubit': context.read<HomeCubit>(),
+                //         'task': tasks[index],
+                //       },
+                //     );
+                //   },
+                // );
               },
             );
           }

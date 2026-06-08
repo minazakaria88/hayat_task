@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:haya/features/home/data/models/task_model.dart';
 
 class TaskDetailsCard extends StatelessWidget {
   const TaskDetailsCard({
     super.key,
-    required this.title,
-    required this.description,
-    required this.status,
-    required this.createdAt,
+    required this.model,
   });
 
-  final String title;
-  final String description;
-  final String status;
-  final DateTime createdAt;
+  final TaskModel model;
 
   Color get statusColor {
-    switch (status.toLowerCase()) {
+    switch (model.status.toLowerCase()) {
       case 'completed':
         return Colors.green;
       case 'in_progress':
@@ -39,18 +34,14 @@ class TaskDetailsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Title
             Text(
-              title,
+              model.title,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 20),
-
-            /// Description
             const Text(
               'Description',
               style: TextStyle(
@@ -62,13 +53,11 @@ class TaskDetailsCard extends StatelessWidget {
             const SizedBox(height: 8),
 
             Text(
-              description,
+              model.description,
               style: const TextStyle(fontSize: 16),
             ),
 
             const SizedBox(height: 24),
-
-            /// Status
             Row(
               children: [
                 const Icon(Icons.flag_outlined),
@@ -84,11 +73,11 @@ class TaskDetailsCard extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.15),
+                    color: statusColor.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    status.toUpperCase(),
+                    model.status.toUpperCase(),
                     style: TextStyle(
                       color: statusColor,
                       fontWeight: FontWeight.bold,
@@ -97,10 +86,7 @@ class TaskDetailsCard extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 20),
-
-            /// Created At
             Row(
               children: [
                 const Icon(Icons.calendar_today_outlined),
@@ -111,7 +97,7 @@ class TaskDetailsCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  createdAt.toLocal().toString().split('.').first,
+                  model.createdAt.toLocal().toString().split('.').first,
                 ),
               ],
             ),
