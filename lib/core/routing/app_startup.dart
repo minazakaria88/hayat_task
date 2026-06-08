@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haya/core/helpers/extensions.dart';
@@ -6,6 +5,7 @@ import 'package:haya/core/networking/api_service.dart';
 import 'package:haya/core/routing/app_router.dart';
 import 'package:haya/core/services/cache_helper.dart';
 import 'package:haya/injection.dart';
+import '../../features/auth/data/datasources/auth_local_data_source.dart';
 
 class AppStartupWidget extends StatelessWidget {
   const AppStartupWidget({super.key, required this.child});
@@ -63,9 +63,10 @@ class AppStartupCubit extends Cubit<AppStartupState> {
       await CacheHelper.init();
       await ApiService.init();
       setupServiceLocator();
-      final isLoggedIn = Random().nextInt(10);
-      if (isLoggedIn < 5) {
-        router.goNamed(AppRouter.login.name);
+      final authLocalDataSource = getIt<AuthLocalDataSource>();
+      final isLoggedIn = await authLocalDataSource.checkTokenIsExist();
+      if (isLoggedIn) {
+        router.goNamed(AppRouter.home.name);
       } else {
         router.goNamed(AppRouter.login.name);
       }
