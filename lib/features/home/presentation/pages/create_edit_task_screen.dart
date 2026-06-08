@@ -72,7 +72,7 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
               children: [
                 AppTextFormField(
                   controller: _titleController,
-                  hintText: 'Title',
+                  hint: 'Title',
                   validator: (value) {
                     if (value.isNullOrEmpty()) {
                       return 'Title is required';
@@ -83,7 +83,7 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
                 Sizes.verticalSpace(AppSpacing.lg),
                 AppTextFormField(
                   controller: _descriptionController,
-                  hintText: 'Description',
+                  hint: 'Description',
                   validator: (value) {
                     if (value.isNullOrEmpty()) {
                       return 'Description is required';

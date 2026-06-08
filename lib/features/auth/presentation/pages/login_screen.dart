@@ -53,14 +53,14 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         appBar: AppBar(title: const Text('Login')),
         body: Padding(
-          padding:  EdgeInsets.all(Sizes.pagePadding),
+          padding: EdgeInsets.all(Sizes.pagePadding),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
                 AppTextFormField(
                   controller: _emailController,
-                  hintText: 'Email',
+                  hint: 'Email',
                   validator: (value) {
                     if (value.isNullOrEmpty()) {
                       return 'Email is required';
@@ -72,46 +72,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 Sizes.verticalSpace(AppSpacing.lg),
-                ValueListenableBuilder(
-                  valueListenable: isPasswordVisible,
-                  builder:(context, value, child) =>  AppTextFormField(
-                    isObscureText: isPasswordVisible.value,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        isPasswordVisible.value ? Icons.visibility : Icons.visibility_off,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        isPasswordVisible.value = !isPasswordVisible.value;
-                      },
-                    ),
-                    controller: _passwordController,
-                    hintText: 'Password',
-                    validator: (value) {
-                      if (value.isNullOrEmpty()) {
-                        return 'Password is required';
-                      }
-                      if (!AppRegex.isPasswordValid(value!)) {
-                        return 'Password is not valid';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+                _buildPasswordInput(),
                 Sizes.verticalSpace(AppSpacing.lg),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) =>
-                      state.authStatus == AuthStatus.loading
-                      ? const CircularProgressIndicator()
-                      : MyButton(title: 'Login', onTap: (){
-                        if (_formKey.currentState!.validate()) {
-                          cubit.login(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-                        }
-                      })
-                ),
+                _buildLoginButton(cubit),
                 Sizes.verticalSpace(AppSpacing.lg),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -127,6 +90,53 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  BlocBuilder<AuthCubit, AuthState> _buildLoginButton(AuthCubit cubit) {
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) => state.authStatus == AuthStatus.loading
+          ? const CircularProgressIndicator()
+          : MyButton(
+              title: 'Login',
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  cubit.login(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
+                }
+              },
+            ),
+    );
+  }
+
+  ValueListenableBuilder<bool> _buildPasswordInput() {
+    return ValueListenableBuilder(
+      valueListenable: isPasswordVisible,
+      builder: (context, value, child) => AppTextFormField(
+        isObscureText: isPasswordVisible.value,
+        suffixIcon: IconButton(
+          icon: Icon(
+            isPasswordVisible.value ? Icons.visibility : Icons.visibility_off,
+            color: Colors.grey,
+          ),
+          onPressed: () {
+            isPasswordVisible.value = !isPasswordVisible.value;
+          },
+        ),
+        controller: _passwordController,
+        hint: 'Password',
+        validator: (value) {
+          if (value.isNullOrEmpty()) {
+            return 'Password is required';
+          }
+          if (!AppRegex.isPasswordValid(value!)) {
+            return 'Password is not valid';
+          }
+          return null;
+        },
       ),
     );
   }

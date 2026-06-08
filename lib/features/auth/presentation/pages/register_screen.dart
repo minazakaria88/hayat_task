@@ -62,7 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 AppTextFormField(
                   controller: _nameController,
-                  hintText: 'Name',
+                  hint: 'Name',
                   validator: (value) {
                     if (value.isNullOrEmpty()) {
                       return 'Name is required';
@@ -73,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Sizes.verticalSpace(AppSpacing.lg),
                 AppTextFormField(
                   controller: _emailController,
-                  hintText: 'Email',
+                  hint: 'Email',
                   validator: (value) {
                     if (value.isNullOrEmpty()) {
                       return 'Email is required';
@@ -85,52 +85,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   },
                 ),
                 Sizes.verticalSpace(AppSpacing.lg),
-                ValueListenableBuilder(
-                  valueListenable: isPasswordVisible,
-                  builder: (context, value, child) => AppTextFormField(
-                    isObscureText: isPasswordVisible.value,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        isPasswordVisible.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        isPasswordVisible.value = !isPasswordVisible.value;
-                      },
-                    ),
-                    controller: _passwordController,
-                    hintText: 'Password',
-                    validator: (value) {
-                      if (value.isNullOrEmpty()) {
-                        return 'Password is required';
-                      }
-                      if (!AppRegex.isPasswordValid(value!)) {
-                        return 'Password is not valid';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+                _buildPasswordInput(),
                 Sizes.verticalSpace(AppSpacing.lg),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) =>
-                      state.authStatus == AuthStatus.loading
-                      ? const CircularProgressIndicator()
-                      : MyButton(
-                          title: 'Register',
-                          onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              cubit.register(
-                                name: _nameController.text,
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                              );
-                            }
-                          },
-                        ),
-                ),
+                _buildRegisterButton(cubit),
                 Sizes.verticalSpace(AppSpacing.lg),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -146,6 +103,55 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  BlocBuilder<AuthCubit, AuthState> _buildRegisterButton(AuthCubit cubit) {
+    return BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) =>
+                    state.authStatus == AuthStatus.loading
+                    ? const CircularProgressIndicator()
+                    : MyButton(
+                        title: 'Register',
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            cubit.register(
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+                          }
+                        },
+                      ),
+              );
+  }
+
+  ValueListenableBuilder<bool> _buildPasswordInput() {
+    return ValueListenableBuilder(
+      valueListenable: isPasswordVisible,
+      builder: (context, value, child) => AppTextFormField(
+        isObscureText: isPasswordVisible.value,
+        suffixIcon: IconButton(
+          icon: Icon(
+            isPasswordVisible.value ? Icons.visibility : Icons.visibility_off,
+            color: Colors.grey,
+          ),
+          onPressed: () {
+            isPasswordVisible.value = !isPasswordVisible.value;
+          },
+        ),
+        controller: _passwordController,
+        hint: 'Password',
+        validator: (value) {
+          if (value.isNullOrEmpty()) {
+            return 'Password is required';
+          }
+          if (!AppRegex.isPasswordValid(value!)) {
+            return 'Password is not valid';
+          }
+          return null;
+        },
       ),
     );
   }
