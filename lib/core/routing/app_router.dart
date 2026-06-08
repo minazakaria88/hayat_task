@@ -6,11 +6,12 @@ import 'package:haya/features/auth/presentation/pages/register_screen.dart';
 import 'package:haya/features/home/presentation/pages/home_screen.dart';
 import 'package:haya/features/profile/presentation/pages/profile_screen.dart';
 import '../../features/home/presentation/cubit/home_cubit.dart';
+import '../../features/home/presentation/pages/create_edit_task_screen.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../injection.dart';
 import '../widgets/main_navigation_scaffold.dart';
 
-enum AppRouter { login, home, register, profile }
+enum AppRouter { login, home, register, profile,createEditTask }
 
 String initialRoute = '/';
 
@@ -24,6 +25,18 @@ final router = GoRouter(
         create: (context) => getIt<AuthCubit>(),
         child: const LoginScreen(),
       ),
+    ),
+    GoRoute(
+      path: '/createEditTask',
+      name: AppRouter.createEditTask.name,
+      builder: (context, state){
+        final data= state.extra as Map<String,dynamic>;
+        final cubit = data['cubit'] as HomeCubit;
+        return BlocProvider.value(
+          value: cubit,
+          child: const CreateEditTaskScreen(),
+        );
+      }
     ),
     GoRoute(
       path: '/register',

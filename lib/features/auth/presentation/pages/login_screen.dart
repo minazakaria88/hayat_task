@@ -47,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: Colors.green,
             ),
           );
+          context.goNamed(AppRouter.home.name);
         }
       },
       child: Scaffold(

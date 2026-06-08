@@ -1,10 +1,11 @@
 import '../datasources/home_remote_data_source.dart';
+import '../models/task_model.dart';
 
 class HomeRepo {
   final HomeRemoteDataSource homeRemoteDataSource;
   HomeRepo({required this.homeRemoteDataSource});
 
-  Future<void> getTodos() async {
+  Future<List<TaskModel>> getTodos() async {
     return homeRemoteDataSource.getTodos();
   }
 

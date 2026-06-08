@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- GetTasksStatus get getTasksStatus; CreateTaskStatus get createTaskStatus; String? get errorMessage;
+ GetTasksStatus get getTasksStatus; CreateTaskStatus get createTaskStatus; String? get errorMessage; List<TaskModel>? get tasks;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.getTasksStatus, getTasksStatus) || other.getTasksStatus == getTasksStatus)&&(identical(other.createTaskStatus, createTaskStatus) || other.createTaskStatus == createTaskStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.getTasksStatus, getTasksStatus) || other.getTasksStatus == getTasksStatus)&&(identical(other.createTaskStatus, createTaskStatus) || other.createTaskStatus == createTaskStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.tasks, tasks));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,getTasksStatus,createTaskStatus,errorMessage);
+int get hashCode => Object.hash(runtimeType,getTasksStatus,createTaskStatus,errorMessage,const DeepCollectionEquality().hash(tasks));
 
 @override
 String toString() {
-  return 'HomeState(getTasksStatus: $getTasksStatus, createTaskStatus: $createTaskStatus, errorMessage: $errorMessage)';
+  return 'HomeState(getTasksStatus: $getTasksStatus, createTaskStatus: $createTaskStatus, errorMessage: $errorMessage, tasks: $tasks)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- GetTasksStatus getTasksStatus, CreateTaskStatus createTaskStatus, String? errorMessage
+ GetTasksStatus getTasksStatus, CreateTaskStatus createTaskStatus, String? errorMessage, List<TaskModel>? tasks
 });
 
 
@@ -62,12 +62,13 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? getTasksStatus = null,Object? createTaskStatus = null,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? getTasksStatus = null,Object? createTaskStatus = null,Object? errorMessage = freezed,Object? tasks = freezed,}) {
   return _then(_self.copyWith(
 getTasksStatus: null == getTasksStatus ? _self.getTasksStatus : getTasksStatus // ignore: cast_nullable_to_non_nullable
 as GetTasksStatus,createTaskStatus: null == createTaskStatus ? _self.createTaskStatus : createTaskStatus // ignore: cast_nullable_to_non_nullable
 as CreateTaskStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,tasks: freezed == tasks ? _self.tasks : tasks // ignore: cast_nullable_to_non_nullable
+as List<TaskModel>?,
   ));
 }
 
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( GetTasksStatus getTasksStatus,  CreateTaskStatus createTaskStatus,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( GetTasksStatus getTasksStatus,  CreateTaskStatus createTaskStatus,  String? errorMessage,  List<TaskModel>? tasks)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage);case _:
+return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage,_that.tasks);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage);
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( GetTasksStatus getTasksStatus,  CreateTaskStatus createTaskStatus,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( GetTasksStatus getTasksStatus,  CreateTaskStatus createTaskStatus,  String? errorMessage,  List<TaskModel>? tasks)  $default,) {final _that = this;
 switch (_that) {
 case _HomeState():
-return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage);case _:
+return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage,_that.tasks);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage);
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( GetTasksStatus getTasksStatus,  CreateTaskStatus createTaskStatus,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( GetTasksStatus getTasksStatus,  CreateTaskStatus createTaskStatus,  String? errorMessage,  List<TaskModel>? tasks)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage);case _:
+return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage,_that.tasks);case _:
   return null;
 
 }
@@ -208,12 +209,21 @@ return $default(_that.getTasksStatus,_that.createTaskStatus,_that.errorMessage);
 
 
 class _HomeState implements HomeState {
-  const _HomeState({this.getTasksStatus = GetTasksStatus.initial, this.createTaskStatus = CreateTaskStatus.initial, this.errorMessage});
+  const _HomeState({this.getTasksStatus = GetTasksStatus.initial, this.createTaskStatus = CreateTaskStatus.initial, this.errorMessage, final  List<TaskModel>? tasks}): _tasks = tasks;
   
 
 @override@JsonKey() final  GetTasksStatus getTasksStatus;
 @override@JsonKey() final  CreateTaskStatus createTaskStatus;
 @override final  String? errorMessage;
+ final  List<TaskModel>? _tasks;
+@override List<TaskModel>? get tasks {
+  final value = _tasks;
+  if (value == null) return null;
+  if (_tasks is EqualUnmodifiableListView) return _tasks;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +235,16 @@ _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.getTasksStatus, getTasksStatus) || other.getTasksStatus == getTasksStatus)&&(identical(other.createTaskStatus, createTaskStatus) || other.createTaskStatus == createTaskStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.getTasksStatus, getTasksStatus) || other.getTasksStatus == getTasksStatus)&&(identical(other.createTaskStatus, createTaskStatus) || other.createTaskStatus == createTaskStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other._tasks, _tasks));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,getTasksStatus,createTaskStatus,errorMessage);
+int get hashCode => Object.hash(runtimeType,getTasksStatus,createTaskStatus,errorMessage,const DeepCollectionEquality().hash(_tasks));
 
 @override
 String toString() {
-  return 'HomeState(getTasksStatus: $getTasksStatus, createTaskStatus: $createTaskStatus, errorMessage: $errorMessage)';
+  return 'HomeState(getTasksStatus: $getTasksStatus, createTaskStatus: $createTaskStatus, errorMessage: $errorMessage, tasks: $tasks)';
 }
 
 
@@ -245,7 +255,7 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- GetTasksStatus getTasksStatus, CreateTaskStatus createTaskStatus, String? errorMessage
+ GetTasksStatus getTasksStatus, CreateTaskStatus createTaskStatus, String? errorMessage, List<TaskModel>? tasks
 });
 
 
@@ -262,12 +272,13 @@ class __$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? getTasksStatus = null,Object? createTaskStatus = null,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? getTasksStatus = null,Object? createTaskStatus = null,Object? errorMessage = freezed,Object? tasks = freezed,}) {
   return _then(_HomeState(
 getTasksStatus: null == getTasksStatus ? _self.getTasksStatus : getTasksStatus // ignore: cast_nullable_to_non_nullable
 as GetTasksStatus,createTaskStatus: null == createTaskStatus ? _self.createTaskStatus : createTaskStatus // ignore: cast_nullable_to_non_nullable
 as CreateTaskStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,tasks: freezed == tasks ? _self._tasks : tasks // ignore: cast_nullable_to_non_nullable
+as List<TaskModel>?,
   ));
 }
 
