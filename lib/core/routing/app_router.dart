@@ -17,13 +17,13 @@ final router = GoRouter(
       name: AppRouter.login.name,
       builder: (context, state) => BlocProvider(
         create: (context) => getIt<AuthCubit>(),
-        child: LoginScreen(),
+        child: const LoginScreen(),
       ),
     ),
     GoRoute(
       path: '/home',
       name: AppRouter.home.name,
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => const HomeScreen(),
     ),
   ],
 );

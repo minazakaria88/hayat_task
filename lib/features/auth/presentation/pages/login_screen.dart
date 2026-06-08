@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:haya/core/helpers/extenstions.dart';
+import 'package:haya/core/helpers/extensions.dart';
 import 'package:haya/features/auth/presentation/cubit/auth_cubit.dart';
 
 class LoginScreen extends StatelessWidget {

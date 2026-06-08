@@ -16,4 +16,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cancel => 'إلغاء';
+
+  @override
+  String get someThingWentWrong => 'حدث خطأ ما';
 }

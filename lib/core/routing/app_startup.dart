@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:haya/core/helpers/extenstions.dart';
+import 'package:haya/core/helpers/extensions.dart';
 import 'package:haya/core/networking/api_service.dart';
 import 'package:haya/core/routing/app_router.dart';
 import 'package:haya/core/services/cache_helper.dart';
@@ -21,22 +21,21 @@ class AppStartupWidget extends StatelessWidget {
             if (state is AppStartupSuccess) {
               return child;
             } else if (state is AppStartupFailure) {
-              return Container(
-                color: Colors.red,
-                child: Column(
+              return Scaffold(
+                body: Column(
                   children: [
-                     Center(child: Text(localization.ok)),
+                    Center(child: Text(localization.someThingWentWrong)),
                     ElevatedButton(
                       onPressed: () {
                         context.read<AppStartupCubit>().startUp();
                       },
-                      child:  Text(localization.retry),
+                      child: Text(localization.retry),
                     ),
                   ],
                 ),
               );
             } else {
-              return CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
@@ -65,7 +64,7 @@ class AppStartupCubit extends Cubit<AppStartupState> {
       await ApiService.init();
       setupServiceLocator();
       final isLoggedIn = Random().nextInt(10);
-      if (isLoggedIn<5) {
+      if (isLoggedIn < 5) {
         router.goNamed(AppRouter.login.name);
       } else {
         router.goNamed(AppRouter.login.name);

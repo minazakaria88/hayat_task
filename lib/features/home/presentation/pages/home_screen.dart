@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haya/core/routing/app_router.dart';
+import 'package:haya/gen/assets.gen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,6 +10,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
+          Image.asset(Assets.images.image.path),
           IconButton(
             onPressed: () {
               router.goNamed(AppRouter.login.name);

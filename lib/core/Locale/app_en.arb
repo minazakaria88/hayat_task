@@ -1,5 +1,6 @@
 {
     "retry":"Retry",
     "ok":"OK",
-    "cancel":"Cancel"
+    "cancel":"Cancel",
+    "someThingWentWrong":"Something went wrong"
 }

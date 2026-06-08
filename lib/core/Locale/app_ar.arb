@@ -1,5 +1,6 @@
 {
     "retry":"إعادة المحاولة",
     "ok":"موافق",
-    "cancel":"إلغاء"
+    "cancel":"إلغاء",
+    "someThingWentWrong":"حدث خطأ ما"
 }
