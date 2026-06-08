@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/profile_cubit.dart';
+import '../widgets/profile_card.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -18,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
           } else if (state.profileStatus == ProfileStatus.failure) {
             return Center(child: Text(state.errorMessage ?? ''));
           } else {
-            return Center(child: Text(state.user?.name ?? ''));
+            return ProfileCard(user: state.user!);
           }
         },
       ),
