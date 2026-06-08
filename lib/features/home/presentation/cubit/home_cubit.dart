@@ -76,14 +76,25 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<bool> deleteTodo({required int id}) async {
+  void deleteTodo({required int id}) async {
     try {
+      emit(state.copyWith(deleteTaskStatus: DeleteTaskStatus.loading));
       await homeRemoteDataSource.deleteTodo(id: id);
-      await getTodos();
-      return true;
+      final newTasks = state.tasks?.where((task) => task.id != id).toList();
+      emit(
+        state.copyWith(
+          deleteTaskStatus: DeleteTaskStatus.success,
+          tasks: newTasks,
+        ),
+      );
     } catch (e) {
       log(e.toString());
-      return false;
+      emit(
+        state.copyWith(
+          deleteTaskStatus: DeleteTaskStatus.failure,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 }

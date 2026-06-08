@@ -57,9 +57,9 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
           context.pop();
         }
         if (state.createTaskStatus == CreateTaskStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage ?? '')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.errorMessage ?? '')));
         }
       },
       child: Scaffold(
@@ -106,39 +106,45 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
                 ),
                 Sizes.verticalSpace(AppSpacing.lg),
 
-                BlocBuilder<HomeCubit, HomeState>(
-                  buildWhen: (previous, current) =>
-                      previous.createTaskStatus != current.createTaskStatus,
-                  builder: (context, state) {
-                    return state.createTaskStatus == CreateTaskStatus.loading
-                        ? const Center(child: CircularProgressIndicator())
-                        : MyButton(
-                            title: isEditMode() ? 'Update' : 'Create',
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                if (isEditMode()) {
-                                  homeCubit.updateTodo(
-                                    id: widget.task!.id,
-                                    title: _titleController.text,
-                                    description: _descriptionController.text,
-                                    status: taskStatus!,
-                                  );
-                                } else {
-                                  homeCubit.createTodo(
-                                    title: _titleController.text,
-                                    description: _descriptionController.text,
-                                  );
-                                }
-                              }
-                            },
-                          );
-                  },
-                ),
+                _buildCreateEditButton(homeCubit),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  BlocBuilder<HomeCubit, HomeState> _buildCreateEditButton(
+    HomeCubit homeCubit,
+  ) {
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) =>
+          previous.createTaskStatus != current.createTaskStatus,
+      builder: (context, state) {
+        return state.createTaskStatus == CreateTaskStatus.loading
+            ? const Center(child: CircularProgressIndicator())
+            : MyButton(
+                title: isEditMode() ? 'Update' : 'Create',
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    if (isEditMode()) {
+                      homeCubit.updateTodo(
+                        id: widget.task!.id,
+                        title: _titleController.text,
+                        description: _descriptionController.text,
+                        status: taskStatus!,
+                      );
+                    } else {
+                      homeCubit.createTodo(
+                        title: _titleController.text,
+                        description: _descriptionController.text,
+                      );
+                    }
+                  }
+                },
+              );
+      },
     );
   }
 }

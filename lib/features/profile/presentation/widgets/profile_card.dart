@@ -74,12 +74,9 @@ class ProfileCard extends StatelessWidget {
               )
             ],
           ),
-
          Sizes.verticalSpace(10),
           const Divider(color: Colors.white30),
-
           Sizes.verticalSpace(10),
-
           Row(
             children: [
               const Icon(Icons.email, color: Colors.white),
