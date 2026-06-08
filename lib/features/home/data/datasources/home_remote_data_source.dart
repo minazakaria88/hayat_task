@@ -1,7 +1,5 @@
 import 'package:haya/core/networking/api_service.dart';
 import 'package:haya/features/home/constants/home_api_constants.dart';
-import 'dart:developer';
-
 import 'package:haya/features/home/data/models/task_model.dart';
 
 class HomeRemoteDataSource {
@@ -17,10 +15,21 @@ class HomeRemoteDataSource {
     required String title,
     required String description,
   }) async {
-    final response = await apiService.post(
+     await apiService.post(
       endpoint: HomeApiConstants.todos,
       body: {'title': title, 'description': description},
     );
-    log(response.data.toString());
+  }
+
+  Future<void> updateTodo({
+    required int id,
+    required String status,
+    required String title,
+    required String description,
+  }) async {
+     await apiService.put(
+      endpoint: HomeApiConstants.updateTodo(id),
+      body: {'title': title, 'description': description, 'status': status},
+    );
   }
 }

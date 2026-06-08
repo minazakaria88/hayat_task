@@ -48,4 +48,31 @@ class HomeCubit extends Cubit<HomeState> {
       );
     }
   }
+
+  void updateTodo({
+    required String status,
+    required String description,
+    required String title,
+    required int id,
+  }) async {
+    try {
+      emit(state.copyWith(createTaskStatus: CreateTaskStatus.loading));
+      await homeRemoteDataSource.updateTodo(
+        id: id,
+        status: status,
+        title: title,
+        description: description,
+      );
+      emit(state.copyWith(createTaskStatus: CreateTaskStatus.success));
+      getTodos();
+    } catch (e) {
+      log(e.toString());
+      emit(
+        state.copyWith(
+          createTaskStatus: CreateTaskStatus.failure,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
 }
