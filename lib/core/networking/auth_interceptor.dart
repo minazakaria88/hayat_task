@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:haya/core/routing/app_router.dart';
 import 'package:haya/core/services/cache_helper.dart';
+import 'package:haya/features/auth/data/datasources/auth_local_data_source.dart';
+import 'package:haya/injection.dart';
 
 class AuthInterceptor extends Interceptor {
   @override
@@ -12,10 +15,11 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler)async {
     if (err.response?.statusCode == 401) {
-      //Todo logout
-      //gotoLogin();
+      final authLocalDataSource=getIt<AuthLocalDataSource>();
+      await authLocalDataSource.logout();
+      router.goNamed(AppRouter.login.name);
     }
     super.onError(err, handler);
   }
