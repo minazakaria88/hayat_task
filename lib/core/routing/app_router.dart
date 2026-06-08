@@ -5,6 +5,7 @@ import 'package:haya/features/auth/presentation/pages/login_screen.dart';
 import 'package:haya/features/auth/presentation/pages/register_screen.dart';
 import 'package:haya/features/home/presentation/pages/home_screen.dart';
 import 'package:haya/features/profile/presentation/pages/profile_screen.dart';
+import '../../features/home/presentation/cubit/home_cubit.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../injection.dart';
 import '../widgets/main_navigation_scaffold.dart';
@@ -42,7 +43,10 @@ final router = GoRouter(
             GoRoute(
               path: '/home',
               name: AppRouter.home.name,
-              builder: (context, state) => const HomeScreen(),
+              builder: (context, state) => BlocProvider(
+                create: (context) => getIt<HomeCubit>()..getTodos(),
+                child: const HomeScreen(),
+              ),
             ),
           ],
         ),

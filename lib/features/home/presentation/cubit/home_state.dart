@@ -1,10 +1,15 @@
 part of 'home_cubit.dart';
 
- class HomeState extends Equatable {
-  const HomeState();
 
-  @override
-  List<Object> get props => [];
+
+enum GetTasksStatus { initial, loading, success, failure }
+enum CreateTaskStatus { initial, loading, success, failure }
+@freezed
+abstract class HomeState with _$HomeState {
+ const factory HomeState({
+  @Default(GetTasksStatus.initial) GetTasksStatus getTasksStatus,
+  @Default(CreateTaskStatus.initial) CreateTaskStatus createTaskStatus,
+  String? errorMessage,
+ }) = _HomeState;
 }
 
-class HomeInitial extends HomeState {}

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubit/home_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -7,7 +10,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Tasks')),
-      body: const Center(child: Text('Home Screen')),
+      body: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          return Container();
+        },
+      ),
     );
   }
 }

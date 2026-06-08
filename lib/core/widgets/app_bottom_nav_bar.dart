@@ -32,11 +32,11 @@ class AppBottomNavBar extends StatelessWidget {
         onTap: (final int index) => _onTap(context, index),
         items: [
           const BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined, size: 20),
+            icon: Icon(Icons.home, size: 25),
             label: 'Home',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline,size: 20,),
+            icon: Icon(Icons.person,size: 25,),
             label: 'Profile',
           ),
         ],

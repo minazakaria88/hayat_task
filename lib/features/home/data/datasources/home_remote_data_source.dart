@@ -6,9 +6,22 @@ class HomeRemoteDataSource {
   final ApiService apiService;
   HomeRemoteDataSource({required this.apiService});
 
+  Future<void> getTodos() async {
+    final response = await apiService.get(endpoint: HomeApiConstants.todos);
+    log(response.data.toString());
+  }
 
-  Future<void> getProfileData() async {
-    final response = await apiService.get(endpoint: HomeApiConstants.profile);
-    log(response.data);
+  Future<void> createTodo({
+    required String title,
+    required String description,
+}) async {
+    final response = await apiService.post(
+      endpoint: HomeApiConstants.todos,
+      body: {
+        'title': title,
+        'description': description
+      },
+    );
+    log(response.data.toString());
   }
 }

@@ -4,8 +4,11 @@ import 'package:haya/features/auth/data/datasources/auth_local_data_source.dart'
 import 'package:haya/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:haya/features/auth/data/repositories/auth_repo.dart';
 import 'package:haya/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:haya/features/home/presentation/cubit/home_cubit.dart';
 import 'package:haya/features/profile/data/repositories/profile_repo.dart';
 
+import 'features/home/data/datasources/home_remote_data_source.dart';
+import 'features/home/data/repositories/home_repo.dart';
 import 'features/profile/data/datasources/profile_remote_data_source.dart';
 import 'features/profile/presentation/cubit/profile_cubit.dart';
 
@@ -31,5 +34,15 @@ void setupServiceLocator() {
   );
   getIt.registerLazySingleton<ProfileRemoteDataSource>(
     () => ProfileRemoteDataSource(apiService: getIt()),
+  );
+
+
+  //home
+  getIt.registerFactory(() => HomeCubit(homeRemoteDataSource: getIt()));
+  getIt.registerLazySingleton<HomeRepo>(
+        () => HomeRepo(homeRemoteDataSource: getIt()),
+  );
+  getIt.registerLazySingleton<HomeRemoteDataSource>(
+        () => HomeRemoteDataSource(apiService: getIt()),
   );
 }
