@@ -75,4 +75,15 @@ class HomeCubit extends Cubit<HomeState> {
       );
     }
   }
+
+  Future<bool> deleteTodo({required int id}) async {
+    try {
+      await homeRemoteDataSource.deleteTodo(id: id);
+      await getTodos();
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
 }

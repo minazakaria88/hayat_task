@@ -32,4 +32,8 @@ class HomeRemoteDataSource {
       body: {'title': title, 'description': description, 'status': status},
     );
   }
+
+  Future<void> deleteTodo({required int id}) async {
+    await apiService.delete(endpoint: HomeApiConstants.updateTodo(id));
+  }
 }
