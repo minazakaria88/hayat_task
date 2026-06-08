@@ -17,4 +17,9 @@ extension BuildContextTheme on BuildContext {
   double get height => size.height.h;
   double get aspectRatio => width / height;
   double get pixelRatio => mediaQuery.devicePixelRatio;
-} 
+}
+
+
+extension StringExtension on String? {
+ bool isNullOrEmpty() => this == null || this!.trim().isEmpty;
+}

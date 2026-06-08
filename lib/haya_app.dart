@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:haya/core/Locale/app_localizations.dart';
 import 'package:haya/core/routing/app_router.dart';
 import 'package:haya/core/routing/app_startup.dart';
+import 'package:haya/core/utils/app_theme.dart';
 
 class HayaApp extends StatelessWidget {
   const HayaApp({super.key});
@@ -23,6 +24,7 @@ class HayaApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
+        theme: appTheme(),
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         routerConfig: router,

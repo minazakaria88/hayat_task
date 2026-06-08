@@ -10,14 +10,15 @@ import 'package:haya/features/auth/presentation/cubit/auth_cubit.dart';
 
 import '../../../../core/routing/app_router.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -25,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -43,20 +45,31 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state.authStatus == AuthStatus.success) {
           context.scaffoldMessengerState.showSnackBar(
             const SnackBar(
-              content: Text('Login Success'),
+              content: Text('Registration Success'),
               backgroundColor: Colors.green,
             ),
           );
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Login')),
+        appBar: AppBar(title: const Text('Register')),
         body: Padding(
-          padding:  EdgeInsets.all(Sizes.pagePadding),
+          padding: EdgeInsets.all(Sizes.pagePadding),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
+                AppTextFormField(
+                  controller: _nameController,
+                  hintText: 'Name',
+                  validator: (value) {
+                    if (value.isNullOrEmpty()) {
+                      return 'Name is required';
+                    }
+                    return null;
+                  },
+                ),
+                Sizes.verticalSpace(AppSpacing.lg),
                 AppTextFormField(
                   controller: _emailController,
                   hintText: 'Email',
@@ -73,11 +86,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 Sizes.verticalSpace(AppSpacing.lg),
                 ValueListenableBuilder(
                   valueListenable: isPasswordVisible,
-                  builder:(context, value, child) =>  AppTextFormField(
+                  builder: (context, value, child) => AppTextFormField(
                     isObscureText: isPasswordVisible.value,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        isPasswordVisible.value ? Icons.visibility : Icons.visibility_off,
+                        isPasswordVisible.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: Colors.grey,
                       ),
                       onPressed: () {
@@ -102,23 +117,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   builder: (context, state) =>
                       state.authStatus == AuthStatus.loading
                       ? const CircularProgressIndicator()
-                      : MyButton(title: 'Login', onTap: (){
-                        if (_formKey.currentState!.validate()) {
-                          cubit.login(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-                        }
-                      })
+                      : MyButton(
+                          title: 'Register',
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              cubit.register(
+                                name: _nameController.text,
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              );
+                            }
+                          },
+                        ),
                 ),
                 Sizes.verticalSpace(AppSpacing.lg),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Don\'t have an account? '),
-                    InkWell(
-                      onTap: () => context.pushNamed(AppRouter.register.name),
-                      child: const Text('Register'),
+                    const Text('Already have an account?'),
+                    TextButton(
+                      onPressed: () => context.goNamed(AppRouter.login.name),
+                      child: const Text('Login'),
                     ),
                   ],
                 ),

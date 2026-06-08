@@ -7,7 +7,19 @@ class AuthRepo {
   AuthRepo({required this.authLocalDataSource, required this.remoteDataSource});
 
   Future<void> login({required String email, required String password}) async {
-    await remoteDataSource.login(email: email, password: password);
-    await authLocalDataSource.saveToken('token');
+   final token = await remoteDataSource.login(email: email, password: password);
+    await authLocalDataSource.saveToken(token);
+  }
+
+  Future<void> register({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
+    await remoteDataSource.register(
+      email: email,
+      password: password,
+      name: name,
+    );
   }
 }
