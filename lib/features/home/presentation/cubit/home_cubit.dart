@@ -78,7 +78,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void deleteTodo({required int id}) async {
     try {
-      emit(state.copyWith(deleteTaskStatus: DeleteTaskStatus.loading));
+      emit(state.copyWith(deleteTaskStatus: DeleteTaskStatus.loading,deletedTaskId: id));
       await homeRemoteDataSource.deleteTodo(id: id);
       final newTasks = state.tasks?.where((task) => task.id != id).toList();
       emit(

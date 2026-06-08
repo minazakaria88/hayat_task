@@ -11,6 +11,7 @@ abstract class HomeState with _$HomeState {
   @Default(GetTasksStatus.initial) GetTasksStatus getTasksStatus,
   @Default(CreateTaskStatus.initial) CreateTaskStatus createTaskStatus,
   @Default(DeleteTaskStatus.initial) DeleteTaskStatus deleteTaskStatus,
+  @Default(-1) int deletedTaskId,
   String? errorMessage,
   List<TaskModel>? tasks
  }) = _HomeState;

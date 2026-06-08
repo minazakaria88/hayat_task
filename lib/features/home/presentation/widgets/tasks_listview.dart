@@ -18,7 +18,11 @@ class TasksListview extends StatelessWidget {
       itemCount: tasks.length,
       itemBuilder: (context, index) {
         final task = tasks[index];
-        return BlocBuilder<HomeCubit, HomeState>(
+        return BlocSelector<HomeCubit, HomeState, bool>(
+          selector: (state) {
+            return state.deletedTaskId == task.id &&
+                state.deleteTaskStatus == DeleteTaskStatus.loading;
+          },
           builder: (context, state) => Stack(
             children: [
               TaskDetailsCard(
@@ -33,7 +37,7 @@ class TasksListview extends StatelessWidget {
                   context.read<HomeCubit>().deleteTodo(id: task.id);
                 },
               ),
-              if (state.deleteTaskStatus == DeleteTaskStatus.loading)
+              if (state)
                 Positioned.fill(
                   child: Container(
                     color: Colors.grey.shade50,
