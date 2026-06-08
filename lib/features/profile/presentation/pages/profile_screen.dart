@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/widgets/error_widget.dart';
 import '../cubit/profile_cubit.dart';
 import '../widgets/profile_card.dart';
 
@@ -17,7 +18,12 @@ class ProfileScreen extends StatelessWidget {
               state.profileStatus == ProfileStatus.initial) {
             return const Center(child: CircularProgressIndicator());
           } else if (state.profileStatus == ProfileStatus.failure) {
-            return Center(child: Text(state.errorMessage ?? ''));
+            return Center(
+              child: AppErrorWidget(
+                error: state.errorMessage ?? '',
+                onRetry: () => context.read<ProfileCubit>().getProfile(),
+              ),
+            );
           } else {
             return ProfileCard(user: state.user!);
           }
