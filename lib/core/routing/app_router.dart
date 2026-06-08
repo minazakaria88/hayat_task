@@ -4,9 +4,12 @@ import 'package:haya/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:haya/features/auth/presentation/pages/login_screen.dart';
 import 'package:haya/features/auth/presentation/pages/register_screen.dart';
 import 'package:haya/features/home/presentation/pages/home_screen.dart';
+import 'package:haya/features/profile/presentation/pages/profile_screen.dart';
+import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../injection.dart';
+import '../widgets/main_navigation_scaffold.dart';
 
-enum AppRouter { login, home,register }
+enum AppRouter { login, home, register, profile }
 
 String initialRoute = '/';
 
@@ -29,10 +32,33 @@ final router = GoRouter(
         child: const RegisterScreen(),
       ),
     ),
-    GoRoute(
-      path: '/home',
-      name: AppRouter.home.name,
-      builder: (context, state) => const HomeScreen(),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainNavigationScaffold(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/home',
+              name: AppRouter.home.name,
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/profile',
+              name: AppRouter.profile.name,
+              builder: (context, state) => BlocProvider(
+                create: (context) => getIt<ProfileCubit>()..getProfile(),
+                child: const ProfileScreen(),
+              ),
+            ),
+          ],
+        ),
+      ],
     ),
   ],
 );

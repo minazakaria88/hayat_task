@@ -3,8 +3,8 @@ import 'package:haya/core/services/cache_helper.dart';
 
 class AuthInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final token=CacheHelper.getSecureString(CacheHelperKeys.token);
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler)async {
+    final token= await CacheHelper.getSecureString(CacheHelperKeys.token);
     options.headers['Authorization'] =
         'Bearer $token';
     options.headers['lang'] = 'en';
