@@ -26,9 +26,10 @@ class HomeScreen extends StatelessWidget {
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           final tasks = state.tasks ?? [];
-          if(state.getTasksStatus == GetTasksStatus.loading||state.getTasksStatus == GetTasksStatus.initial){
-            return const Center(child: CircularProgressIndicator());}
-          else if (state.getTasksStatus == GetTasksStatus.failure) {
+          if (state.getTasksStatus == GetTasksStatus.loading ||
+              state.getTasksStatus == GetTasksStatus.initial) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state.getTasksStatus == GetTasksStatus.failure) {
             return Center(child: Text(state.errorMessage ?? ''));
           } else {
             return ListView.separated(
@@ -39,10 +40,7 @@ class HomeScreen extends StatelessWidget {
                   title: Text(tasks[index].title),
                   subtitle: Text(tasks[index].description),
                   trailing: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
+                    icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
                       //context.read<HomeCubit>().deleteTask(tasks[index].id);
                     },
@@ -50,7 +48,10 @@ class HomeScreen extends StatelessWidget {
                   onTap: () {
                     context.pushNamed(
                       AppRouter.createEditTask.name,
-                      extra: {'cubit': context.read<HomeCubit>(), 'task': tasks[index]},
+                      extra: {
+                        'cubit': context.read<HomeCubit>(),
+                        'task': tasks[index],
+                      },
                     );
                   },
                 );

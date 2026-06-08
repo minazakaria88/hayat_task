@@ -4,11 +4,12 @@ import 'package:haya/core/helpers/extensions.dart';
 import 'package:haya/core/helpers/sizes.dart';
 import 'package:haya/core/widgets/app_button.dart';
 import '../../../../core/widgets/my_text_form_field.dart';
+import '../../data/models/task_model.dart';
 import '../cubit/home_cubit.dart';
 
 class CreateEditTaskScreen extends StatefulWidget {
-  const CreateEditTaskScreen({super.key});
-
+  const CreateEditTaskScreen({super.key, this.task});
+  final TaskModel? task;
   @override
   State<CreateEditTaskScreen> createState() => _CreateEditTaskScreenState();
 }
@@ -17,6 +18,24 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  String? taskStatus;
+
+  bool isEditMode() => widget.task != null;
+
+  void initTask() {
+    if (widget.task == null) {
+      return;
+    }
+    _titleController.text = widget.task!.title;
+    _descriptionController.text = widget.task!.description;
+    taskStatus = widget.task!.status;
+  }
+
+  @override
+  void initState() {
+    initTask();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -29,7 +48,7 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
   Widget build(BuildContext context) {
     final homeCubit = context.read<HomeCubit>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Edit Task')),
+      appBar: AppBar(title: Text(isEditMode() ? 'Edit Task' : 'Create Task')),
       body: Padding(
         padding: EdgeInsets.all(Sizes.pagePadding),
         child: Form(
@@ -65,13 +84,21 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
                   return state.createTaskStatus == CreateTaskStatus.loading
                       ? const Center(child: CircularProgressIndicator())
                       : MyButton(
-                          title: 'Create',
+                          title: isEditMode() ? 'Update' : 'Create',
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
-                              homeCubit.createTodo(
-                                title: _titleController.text,
-                                description: _descriptionController.text,
-                              );
+                              if (isEditMode()) {
+                                // homeCubit.updateTodo(
+                                //   id: widget.task!.id,
+                                //   title: _titleController.text,
+                                //   description: _descriptionController.text,
+                                // );
+                              } else {
+                                homeCubit.createTodo(
+                                  title: _titleController.text,
+                                  description: _descriptionController.text,
+                                );
+                              }
                             }
                           },
                         );

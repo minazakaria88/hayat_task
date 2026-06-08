@@ -11,7 +11,7 @@ import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../injection.dart';
 import '../widgets/main_navigation_scaffold.dart';
 
-enum AppRouter { login, home, register, profile,createEditTask }
+enum AppRouter { login, home, register, profile, createEditTask }
 
 String initialRoute = '/';
 
@@ -29,14 +29,15 @@ final router = GoRouter(
     GoRoute(
       path: '/createEditTask',
       name: AppRouter.createEditTask.name,
-      builder: (context, state){
-        final data= state.extra as Map<String,dynamic>;
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>;
         final cubit = data['cubit'] as HomeCubit;
+        final task = data['task'];
         return BlocProvider.value(
           value: cubit,
-          child: const CreateEditTaskScreen(),
+          child: CreateEditTaskScreen(task: task),
         );
-      }
+      },
     ),
     GoRoute(
       path: '/register',
