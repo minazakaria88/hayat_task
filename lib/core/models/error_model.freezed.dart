@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ErrorModel {
 
- String get type; String get title; List<String> get details; DateTime? get timestamp;
+ String get message; Map<String, dynamic> get errors;
 /// Create a copy of ErrorModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ErrorModelCopyWith<ErrorModel> get copyWith => _$ErrorModelCopyWithImpl<ErrorMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ErrorModel&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.details, details)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ErrorModel&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other.errors, errors));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,title,const DeepCollectionEquality().hash(details),timestamp);
+int get hashCode => Object.hash(runtimeType,message,const DeepCollectionEquality().hash(errors));
 
 @override
 String toString() {
-  return 'ErrorModel(type: $type, title: $title, details: $details, timestamp: $timestamp)';
+  return 'ErrorModel(message: $message, errors: $errors)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ErrorModelCopyWith<$Res>  {
   factory $ErrorModelCopyWith(ErrorModel value, $Res Function(ErrorModel) _then) = _$ErrorModelCopyWithImpl;
 @useResult
 $Res call({
- String type, String title, List<String> details, DateTime? timestamp
+ String message, Map<String, dynamic> errors
 });
 
 
@@ -65,13 +65,11 @@ class _$ErrorModelCopyWithImpl<$Res>
 
 /// Create a copy of ErrorModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? type = null,Object? title = null,Object? details = null,Object? timestamp = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? message = null,Object? errors = null,}) {
   return _then(_self.copyWith(
-type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,details: null == details ? _self.details : details // ignore: cast_nullable_to_non_nullable
-as List<String>,timestamp: freezed == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,errors: null == errors ? _self.errors : errors // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,
   ));
 }
 
@@ -156,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String type,  String title,  List<String> details,  DateTime? timestamp)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String message,  Map<String, dynamic> errors)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ErrorModel() when $default != null:
-return $default(_that.type,_that.title,_that.details,_that.timestamp);case _:
+return $default(_that.message,_that.errors);case _:
   return orElse();
 
 }
@@ -177,10 +175,10 @@ return $default(_that.type,_that.title,_that.details,_that.timestamp);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String type,  String title,  List<String> details,  DateTime? timestamp)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String message,  Map<String, dynamic> errors)  $default,) {final _that = this;
 switch (_that) {
 case _ErrorModel():
-return $default(_that.type,_that.title,_that.details,_that.timestamp);case _:
+return $default(_that.message,_that.errors);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +195,10 @@ return $default(_that.type,_that.title,_that.details,_that.timestamp);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String type,  String title,  List<String> details,  DateTime? timestamp)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String message,  Map<String, dynamic> errors)?  $default,) {final _that = this;
 switch (_that) {
 case _ErrorModel() when $default != null:
-return $default(_that.type,_that.title,_that.details,_that.timestamp);case _:
+return $default(_that.message,_that.errors);case _:
   return null;
 
 }
@@ -212,19 +210,17 @@ return $default(_that.type,_that.title,_that.details,_that.timestamp);case _:
 @JsonSerializable()
 
 class _ErrorModel implements ErrorModel {
-  const _ErrorModel({required this.type, required this.title, final  List<String> details = const <String>[], this.timestamp}): _details = details;
+  const _ErrorModel({required this.message, required final  Map<String, dynamic> errors}): _errors = errors;
   factory _ErrorModel.fromJson(Map<String, dynamic> json) => _$ErrorModelFromJson(json);
 
-@override final  String type;
-@override final  String title;
- final  List<String> _details;
-@override@JsonKey() List<String> get details {
-  if (_details is EqualUnmodifiableListView) return _details;
+@override final  String message;
+ final  Map<String, dynamic> _errors;
+@override Map<String, dynamic> get errors {
+  if (_errors is EqualUnmodifiableMapView) return _errors;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_details);
+  return EqualUnmodifiableMapView(_errors);
 }
 
-@override final  DateTime? timestamp;
 
 /// Create a copy of ErrorModel
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ErrorModel&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._details, _details)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ErrorModel&&(identical(other.message, message) || other.message == message)&&const DeepCollectionEquality().equals(other._errors, _errors));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,type,title,const DeepCollectionEquality().hash(_details),timestamp);
+int get hashCode => Object.hash(runtimeType,message,const DeepCollectionEquality().hash(_errors));
 
 @override
 String toString() {
-  return 'ErrorModel(type: $type, title: $title, details: $details, timestamp: $timestamp)';
+  return 'ErrorModel(message: $message, errors: $errors)';
 }
 
 
@@ -259,7 +255,7 @@ abstract mixin class _$ErrorModelCopyWith<$Res> implements $ErrorModelCopyWith<$
   factory _$ErrorModelCopyWith(_ErrorModel value, $Res Function(_ErrorModel) _then) = __$ErrorModelCopyWithImpl;
 @override @useResult
 $Res call({
- String type, String title, List<String> details, DateTime? timestamp
+ String message, Map<String, dynamic> errors
 });
 
 
@@ -276,13 +272,11 @@ class __$ErrorModelCopyWithImpl<$Res>
 
 /// Create a copy of ErrorModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? type = null,Object? title = null,Object? details = null,Object? timestamp = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? message = null,Object? errors = null,}) {
   return _then(_ErrorModel(
-type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,details: null == details ? _self._details : details // ignore: cast_nullable_to_non_nullable
-as List<String>,timestamp: freezed == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,errors: null == errors ? _self._errors : errors // ignore: cast_nullable_to_non_nullable
+as Map<String, dynamic>,
   ));
 }
 

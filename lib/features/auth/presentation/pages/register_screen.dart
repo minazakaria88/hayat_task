@@ -49,6 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               backgroundColor: Colors.green,
             ),
           );
+          context.goNamed(AppRouter.login.name);
         }
       },
       child: Scaffold(

@@ -71,15 +71,15 @@ class ServerFailure extends Failure {
     }
 
      var message = '';
-    if (errorModel != null && errorModel.details.isNotEmpty) {
-      message = errorModel.details
+    if (errorModel != null && errorModel.errors.isNotEmpty) {
+      message = errorModel.errors.values
           .map((final error) => '\u202A$error\u202C')
           .join('\n');
     }
 
     // Fallback to title if details are empty
     if (message.isEmpty && errorModel != null) {
-      message = errorModel.title;
+      message = errorModel.message;
     }
 
     // Final fallback generic message
