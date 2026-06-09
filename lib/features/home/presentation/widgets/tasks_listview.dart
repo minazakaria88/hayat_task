@@ -13,6 +13,7 @@ class TasksListview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeCubit = context.read<HomeCubit>();
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 8),
       itemCount: tasks.length,
@@ -30,17 +31,17 @@ class TasksListview extends StatelessWidget {
                 onEdit: () {
                   context.pushNamed(
                     AppRouter.createEditTask.name,
-                    extra: {'cubit': context.read<HomeCubit>(), 'task': task},
+                    extra: {'cubit': homeCubit, 'task': task},
                   );
                 },
                 onDelete: () async {
-                  context.read<HomeCubit>().deleteTodo(id: task.id);
+                  homeCubit.deleteTodo(id: task.id);
                 },
               ),
               if (state)
                 Positioned.fill(
                   child: Container(
-                    color: Colors.grey.shade50,
+                    color: Colors.grey.withValues(alpha: 0.5),
                     width: double.infinity,
                     height: double.infinity,
                     child: const Center(child: CircularProgressIndicator()),
