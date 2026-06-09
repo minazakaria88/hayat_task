@@ -57,8 +57,14 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Text(
+                  'Login to your account',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
+                ),
+                Sizes.verticalSpace(AppSpacing.lg),
                 AppTextFormField(
                   controller: _emailController,
                   hint: 'Email',
@@ -98,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
   BlocBuilder<AuthCubit, AuthState> _buildLoginButton(AuthCubit cubit) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) => state.authStatus == AuthStatus.loading
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : MyButton(
               title: 'Login',
               onTap: () {

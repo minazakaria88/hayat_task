@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haya/features/home/presentation/widgets/tasks_loading_widget.dart';
 import '../../../../core/routing/app_router.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/error_widget.dart';
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
           final tasks = state.tasks ?? [];
           if (state.getTasksStatus == GetTasksStatus.loading ||
               state.getTasksStatus == GetTasksStatus.initial) {
-            return const Center(child: CircularProgressIndicator());
+            return const TasksLoadingWidget();
           } else if (state.getTasksStatus == GetTasksStatus.failure) {
             return Center(
               child: AppErrorWidget(

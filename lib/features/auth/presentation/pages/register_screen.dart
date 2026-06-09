@@ -59,8 +59,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Text(
+                  'Create an account to continue',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
+                ),
+                Sizes.verticalSpace(AppSpacing.lg),
                 AppTextFormField(
                   controller: _nameController,
                   hint: 'Name',
@@ -112,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) =>
                     state.authStatus == AuthStatus.loading
-                    ? const CircularProgressIndicator()
+                    ? const Center(child: CircularProgressIndicator())
                     : MyButton(
                         title: 'Register',
                         onTap: () {

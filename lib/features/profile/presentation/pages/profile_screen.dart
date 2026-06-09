@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:haya/core/widgets/shimmer_item.dart';
 import '../../../../core/widgets/error_widget.dart';
 import '../cubit/profile_cubit.dart';
 import '../widgets/profile_card.dart';
@@ -15,7 +16,11 @@ class ProfileScreen extends StatelessWidget {
         builder: (context, state) {
           if (state.profileStatus == ProfileStatus.loading ||
               state.profileStatus == ProfileStatus.initial) {
-            return const Center(child: CircularProgressIndicator());
+            return const ShimmerItem(
+              width: double.infinity,
+              height: 100,
+              margin: 10,
+            );
           } else if (state.profileStatus == ProfileStatus.failure) {
             return Center(
               child: AppErrorWidget(
