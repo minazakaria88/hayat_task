@@ -22,4 +22,7 @@ class AuthRepo {
       name: name,
     );
   }
+
+
+  Future<void> logout() async => await authLocalDataSource.logout();
 }

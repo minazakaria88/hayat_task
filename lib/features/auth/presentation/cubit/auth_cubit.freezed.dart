@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthState {
 
- AuthStatus get authStatus; String? get errorMessage;
+ AuthStatus get authStatus; LogoutStatus get logoutStatus; String? get errorMessage;
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $AuthStateCopyWith<AuthState> get copyWith => _$AuthStateCopyWithImpl<AuthState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.authStatus, authStatus) || other.authStatus == authStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.authStatus, authStatus) || other.authStatus == authStatus)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,authStatus,errorMessage);
+int get hashCode => Object.hash(runtimeType,authStatus,logoutStatus,errorMessage);
 
 @override
 String toString() {
-  return 'AuthState(authStatus: $authStatus, errorMessage: $errorMessage)';
+  return 'AuthState(authStatus: $authStatus, logoutStatus: $logoutStatus, errorMessage: $errorMessage)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $AuthStateCopyWith<$Res>  {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) _then) = _$AuthStateCopyWithImpl;
 @useResult
 $Res call({
- AuthStatus authStatus, String? errorMessage
+ AuthStatus authStatus, LogoutStatus logoutStatus, String? errorMessage
 });
 
 
@@ -62,10 +62,11 @@ class _$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? authStatus = null,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? authStatus = null,Object? logoutStatus = null,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
 authStatus: null == authStatus ? _self.authStatus : authStatus // ignore: cast_nullable_to_non_nullable
-as AuthStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as AuthStatus,logoutStatus: null == logoutStatus ? _self.logoutStatus : logoutStatus // ignore: cast_nullable_to_non_nullable
+as LogoutStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStatus authStatus,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AuthStatus authStatus,  LogoutStatus logoutStatus,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.authStatus,_that.errorMessage);case _:
+return $default(_that.authStatus,_that.logoutStatus,_that.errorMessage);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.authStatus,_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStatus authStatus,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AuthStatus authStatus,  LogoutStatus logoutStatus,  String? errorMessage)  $default,) {final _that = this;
 switch (_that) {
 case _AuthState():
-return $default(_that.authStatus,_that.errorMessage);case _:
+return $default(_that.authStatus,_that.logoutStatus,_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.authStatus,_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStatus authStatus,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AuthStatus authStatus,  LogoutStatus logoutStatus,  String? errorMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthState() when $default != null:
-return $default(_that.authStatus,_that.errorMessage);case _:
+return $default(_that.authStatus,_that.logoutStatus,_that.errorMessage);case _:
   return null;
 
 }
@@ -207,10 +208,11 @@ return $default(_that.authStatus,_that.errorMessage);case _:
 
 
 class _AuthState implements AuthState {
-  const _AuthState({this.authStatus = AuthStatus.initial, this.errorMessage});
+  const _AuthState({this.authStatus = AuthStatus.initial, this.logoutStatus = LogoutStatus.initial, this.errorMessage});
   
 
 @override@JsonKey() final  AuthStatus authStatus;
+@override@JsonKey() final  LogoutStatus logoutStatus;
 @override final  String? errorMessage;
 
 /// Create a copy of AuthState
@@ -223,16 +225,16 @@ _$AuthStateCopyWith<_AuthState> get copyWith => __$AuthStateCopyWithImpl<_AuthSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.authStatus, authStatus) || other.authStatus == authStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.authStatus, authStatus) || other.authStatus == authStatus)&&(identical(other.logoutStatus, logoutStatus) || other.logoutStatus == logoutStatus)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,authStatus,errorMessage);
+int get hashCode => Object.hash(runtimeType,authStatus,logoutStatus,errorMessage);
 
 @override
 String toString() {
-  return 'AuthState(authStatus: $authStatus, errorMessage: $errorMessage)';
+  return 'AuthState(authStatus: $authStatus, logoutStatus: $logoutStatus, errorMessage: $errorMessage)';
 }
 
 
@@ -243,7 +245,7 @@ abstract mixin class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Re
   factory _$AuthStateCopyWith(_AuthState value, $Res Function(_AuthState) _then) = __$AuthStateCopyWithImpl;
 @override @useResult
 $Res call({
- AuthStatus authStatus, String? errorMessage
+ AuthStatus authStatus, LogoutStatus logoutStatus, String? errorMessage
 });
 
 
@@ -260,10 +262,11 @@ class __$AuthStateCopyWithImpl<$Res>
 
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? authStatus = null,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? authStatus = null,Object? logoutStatus = null,Object? errorMessage = freezed,}) {
   return _then(_AuthState(
 authStatus: null == authStatus ? _self.authStatus : authStatus // ignore: cast_nullable_to_non_nullable
-as AuthStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as AuthStatus,logoutStatus: null == logoutStatus ? _self.logoutStatus : logoutStatus // ignore: cast_nullable_to_non_nullable
+as LogoutStatus,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:haya/features/auth/data/repositories/auth_repo.dart';
@@ -36,6 +38,23 @@ class AuthCubit extends Cubit<AuthState> {
       emit(
         state.copyWith(
           authStatus: AuthStatus.failure,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+
+  Future<void> logout() async {
+    try {
+      emit(state.copyWith(logoutStatus: LogoutStatus.loading));
+      await authRepo.logout();
+      emit(state.copyWith(logoutStatus: LogoutStatus.success));
+    } catch (e) {
+      log(e.toString());
+      emit(
+        state.copyWith(
+          logoutStatus: LogoutStatus.failure,
           errorMessage: e.toString(),
         ),
       );

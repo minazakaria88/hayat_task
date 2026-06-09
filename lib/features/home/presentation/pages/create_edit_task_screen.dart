@@ -52,6 +52,8 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
   Widget build(BuildContext context) {
     final homeCubit = context.read<HomeCubit>();
     return BlocListener<HomeCubit, HomeState>(
+      listenWhen: (previous, current) =>
+          previous.createTaskStatus != current.createTaskStatus,
       listener: (context, state) {
         if (state.createTaskStatus == CreateTaskStatus.success) {
           context.pop();
@@ -92,6 +94,7 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
                   },
                 ),
                 Sizes.verticalSpace(AppSpacing.lg),
+                if (isEditMode())
                 MyDropDownMenu(
                   width: double.infinity,
                   maxHeight: 56,
