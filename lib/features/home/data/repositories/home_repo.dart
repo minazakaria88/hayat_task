@@ -5,7 +5,7 @@ class HomeRepo {
   final HomeRemoteDataSource homeRemoteDataSource;
   HomeRepo({required this.homeRemoteDataSource});
 
-  Future<List<TaskModel>> getTodos() async {
+  Future<List<TaskModel>> getTodos() {
     return homeRemoteDataSource.getTodos();
   }
 
@@ -13,7 +13,10 @@ class HomeRepo {
     required String title,
     required String description,
   }) async {
-    homeRemoteDataSource.createTodo(title: title, description: description);
+    return homeRemoteDataSource.createTodo(
+      title: title,
+      description: description,
+    );
   }
 
   Future<void> updateTodo({
@@ -22,7 +25,7 @@ class HomeRepo {
     required String title,
     required String description,
   }) async {
-    homeRemoteDataSource.updateTodo(
+    return homeRemoteDataSource.updateTodo(
       id: id,
       status: status,
       title: title,
