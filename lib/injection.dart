@@ -38,7 +38,7 @@ void setupServiceLocator() {
 
 
   //home
-  getIt.registerFactory(() => HomeCubit(homeRemoteDataSource: getIt()));
+  getIt.registerFactory(() => HomeCubit(homeRepo: getIt()));
   getIt.registerLazySingleton<HomeRepo>(
         () => HomeRepo(homeRemoteDataSource: getIt()),
   );

@@ -2,19 +2,20 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:haya/features/home/data/datasources/home_remote_data_source.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:haya/features/home/data/repositories/home_repo.dart';
 
 import '../../data/models/task_model.dart';
 part 'home_cubit.freezed.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({required this.homeRemoteDataSource}) : super(const HomeState());
-  final HomeRemoteDataSource homeRemoteDataSource;
+  HomeCubit({required this.homeRepo}) : super(const HomeState());
+  final HomeRepo homeRepo;
 
   Future<void> getTodos() async {
     try {
       emit(state.copyWith(getTasksStatus: GetTasksStatus.loading));
-      final tasks = await homeRemoteDataSource.getTodos();
+      final tasks = await homeRepo.getTodos();
       emit(
         state.copyWith(getTasksStatus: GetTasksStatus.success, tasks: tasks),
       );
@@ -32,7 +33,7 @@ class HomeCubit extends Cubit<HomeState> {
   void createTodo({required String title, required String description}) async {
     try {
       emit(state.copyWith(createTaskStatus: CreateTaskStatus.loading));
-      await homeRemoteDataSource.createTodo(
+      await homeRepo.createTodo(
         title: title,
         description: description,
       );
@@ -57,7 +58,7 @@ class HomeCubit extends Cubit<HomeState> {
   }) async {
     try {
       emit(state.copyWith(createTaskStatus: CreateTaskStatus.loading));
-      await homeRemoteDataSource.updateTodo(
+      await homeRepo.updateTodo(
         id: id,
         status: status,
         title: title,
@@ -79,7 +80,7 @@ class HomeCubit extends Cubit<HomeState> {
   void deleteTodo({required int id}) async {
     try {
       emit(state.copyWith(deleteTaskStatus: DeleteTaskStatus.loading,deletedTaskId: id));
-      await homeRemoteDataSource.deleteTodo(id: id);
+      await homeRepo.deleteTodo(id: id);
       final newTasks = state.tasks?.where((task) => task.id != id).toList();
       emit(
         state.copyWith(

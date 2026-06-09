@@ -32,4 +32,8 @@ class HomeRepo {
       description: description,
     );
   }
+
+  Future<void> deleteTodo({required int id}) async {
+    return homeRemoteDataSource.deleteTodo(id: id);
+  }
 }
