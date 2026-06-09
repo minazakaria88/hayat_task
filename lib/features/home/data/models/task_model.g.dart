@@ -10,7 +10,7 @@ _TaskModel _$TaskModelFromJson(Map<String, dynamic> json) => _TaskModel(
   id: (json['id'] as num).toInt(),
   title: json['title'] as String,
   description: json['description'] as String,
-  status: json['status'] as String,
+  status: $enumDecode(_$TaskStatusEnumMap, json['status']),
   createdAt: DateTime.parse(json['created_at'] as String),
 );
 
@@ -19,6 +19,12 @@ Map<String, dynamic> _$TaskModelToJson(_TaskModel instance) =>
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'status': instance.status,
+      'status': _$TaskStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt.toIso8601String(),
     };
+
+const _$TaskStatusEnumMap = {
+  TaskStatus.pending: 'pending',
+  TaskStatus.inProgress: 'in_progress',
+  TaskStatus.completed: 'completed',
+};

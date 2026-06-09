@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../constants/tasks_constants.dart';
+
 part 'task_model.freezed.dart';
 part 'task_model.g.dart';
 
@@ -9,7 +11,7 @@ abstract class TaskModel with _$TaskModel {
     required int id,
     required String title,
     required String description,
-    required String status,
+    required TaskStatus status,
     @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _TaskModel;
 

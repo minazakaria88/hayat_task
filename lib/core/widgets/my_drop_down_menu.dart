@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../features/home/constants/tasks_constants.dart';
 import '../utils/app_colors.dart';
 
 class MyDropDownMenu extends StatelessWidget {
@@ -12,7 +13,7 @@ class MyDropDownMenu extends StatelessWidget {
     this.maxHeight = 45,
     this.width,
   });
-  final String? initialValue;
+  final TaskStatus? initialValue;
   final String label;
   final Function onSelected;
   final double? menuHeight;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:haya/core/helpers/sizes.dart';
 import 'package:haya/core/utils/app_colors.dart';
+import 'package:haya/features/home/constants/tasks_constants.dart';
 import 'package:haya/features/home/data/models/task_model.dart';
 import 'package:intl/intl.dart';
 
@@ -17,10 +18,10 @@ class TaskDetailsCard extends StatelessWidget {
   final VoidCallback onDelete;
 
   Color get statusColor {
-    switch (model.status.toLowerCase()) {
+    switch (model.status.label.toLowerCase()) {
       case 'completed':
         return Colors.green;
-      case 'in_progress':
+      case 'in progress':
         return Colors.orange;
       case 'pending':
       default:
@@ -28,23 +29,23 @@ class TaskDetailsCard extends StatelessWidget {
     }
   }
 
-  String get statusLabel {
-    switch (model.status.toLowerCase()) {
-      case 'completed':
-        return 'Completed';
-      case 'in_progress':
-        return 'In Progress';
-      case 'pending':
-      default:
-        return 'Pending';
-    }
-  }
+  // String get statusLabel {
+  //   switch (model.status.name.toLowerCase()) {
+  //     case 'completed':
+  //       return 'Completed';
+  //     case 'in_progress':
+  //       return 'In Progress';
+  //     case 'pending':
+  //     default:
+  //       return 'Pending';
+  //   }
+  // }
 
   IconData get statusIcon {
-    switch (model.status.toLowerCase()) {
+    switch (model.status.label.toLowerCase()) {
       case 'completed':
         return Icons.check_circle_outline;
-      case 'in_progress':
+      case 'in progress':
         return Icons.timelapse;
       case 'pending':
       default:
@@ -109,7 +110,7 @@ class TaskDetailsCard extends StatelessWidget {
                       Icon(statusIcon, size: 14, color: statusColor),
                       const SizedBox(width: 4),
                       Text(
-                        statusLabel,
+                        model.status.label,
                         style: TextStyle(
                           color: statusColor,
                           fontWeight: FontWeight.w600,

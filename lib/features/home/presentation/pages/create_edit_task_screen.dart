@@ -6,6 +6,7 @@ import 'package:haya/core/helpers/sizes.dart';
 import 'package:haya/core/widgets/app_button.dart';
 import 'package:haya/core/widgets/my_drop_down_menu.dart';
 import '../../../../core/widgets/my_text_form_field.dart';
+import '../../constants/tasks_constants.dart';
 import '../../data/models/task_model.dart';
 import '../cubit/home_cubit.dart';
 
@@ -20,9 +21,7 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  String? taskStatus;
-
-  final taskStatuses = ['pending', 'in_progress', 'completed'];
+  TaskStatus? taskStatus;
 
   bool isEditMode() => widget.task != null;
 
@@ -103,8 +102,11 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
                   onSelected: (value) {
                     taskStatus = value;
                   },
-                  dropdownMenuEntries: taskStatuses
-                      .map((e) => DropdownMenuEntry(label: e, value: e))
+                  dropdownMenuEntries: TaskStatus.values
+                      .map((e) => DropdownMenuEntry(
+                            value: e,
+                            label: e.label,
+                          ))
                       .toList(),
                 ),
                 Sizes.verticalSpace(AppSpacing.lg),
@@ -136,7 +138,7 @@ class _CreateEditTaskScreenState extends State<CreateEditTaskScreen> {
                         id: widget.task!.id,
                         title: _titleController.text,
                         description: _descriptionController.text,
-                        status: taskStatus!,
+                        status: taskStatus!.apiValue,
                       );
                     } else {
                       homeCubit.createTodo(
